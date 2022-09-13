@@ -1,4 +1,4 @@
-package web.service;
+package web.dao;
 
 import org.springframework.stereotype.Service;
 import web.model.Car;
@@ -19,12 +19,10 @@ public class CarService {
         carList.add(new Car(3L, "Niva", 343400.00));
     }
 
-    public List<Car> getCar(Integer count) {
-        // тут сначала делал через цикл, потом передумал и сделал через стрим. Не знаю, что из этого
-        // оптимальнее, но стрим короче по записи. Буду благодарен за комментарий))
-        if (count != null && count < 5 && count > 0) {
-            return carList.stream().limit(count).toList();
-        }
+    public List<Car> getLimitCars(Integer count) {
+        return carList.stream().limit(count).toList();
+    }
+    public List<Car> getAllCars() {
         return carList;
     }
 }

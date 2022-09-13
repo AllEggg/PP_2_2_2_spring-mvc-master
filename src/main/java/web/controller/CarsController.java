@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import web.service.CarService;
+import web.dao.CarService;
 
 @Controller
 @RequestMapping("/cars")
@@ -20,7 +20,11 @@ public class CarsController {
     @GetMapping
     public String getCar(@RequestParam(value = "count", required = false) Integer count,
                          Model model) {
-        model.addAttribute("cars", carService.getCar(count));
+        if (count != null && count < 5 && count > 0) {
+            model.addAttribute("cars", carService.getLimitCars(count));
+        } else {
+            model.addAttribute("cars", carService.getAllCars());
+        }
         return "carPage";
     }
 
